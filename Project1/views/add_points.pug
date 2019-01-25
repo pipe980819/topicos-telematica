@@ -7,29 +7,59 @@ block content
             .form-row
                 .form-group.col-md-6
                     label Latitude
-                    input.form-control(name='latitude', type='text' placeholder='latitude')
+                    input.form-control(name='latitude' type='text' placeholder='latitude' id="latitude")
                 .form-group.col-md-6
                     label Longitude
-                    input.form-control(name='longitude', type='text' placeholder='longitude')
+                    input.form-control(name='longitude' type='text' placeholder='longitude' id="longitude")
             .infoText
                 label Move the pin over the map
             hr
             p(style='text-align:center').lead
                 button.btn.btn-primary(type='submit') Add point
     p(style='text-align:center').lead
-        button.btn.btn-primary(type='submit') Create route
+        button.btn.btn-primary(onclick='getLocation()') Create route
     // The div element for the map
     #map
     // Replace the value of the key parameter with your own API key.
     script.
         // Initialize and add the map
+        var map;
         function initMap() {
-        // The location of Uluru
-        var uluru = {lat: -25.344, lng: 131.036};
-        // The map, centered at Uluru
-        var map = new google.maps.Map(
-        document.getElementById('map'), {zoom: 4, center: uluru});
-        // The marker, positioned at Uluru
-        var marker = new google.maps.Marker({position: uluru, map: map});
+            getLocation();
         }
-    script(async='' defer='' src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAZC2drNgge8VSt0MKNKoACprFPGsGcbeg&callback=initMap')
+        function getLocation(){
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var pos = {lat: position.coords.latitude, longi: position.coords.longitude};
+                document.getElementById("latitude").value = pos.lat;
+                document.getElementById("longitude").value = pos.longi;
+                var latitude = parseFloat(document.getElementById("latitude").value);
+                var longitude = parseFloat(document.getElementById("longitude").value);
+                var posMap = {lat: latitude, lng: longitude};
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: posMap,
+                    zoom: 15
+            });
+            var marker = new google.maps.Marker({position: posMap, map: map, draggable: true});
+            google.maps.event.addListener(marker,'dragend',function(event) {
+                var latitude = marker.getPosition().toString()
+                latitude = latitude.split(',',1).toString()
+                latitude = latitude.substring(1)
+
+                var longitude = marker.getPosition().toString()
+                var pos = longitude.indexOf(',')
+                longitude = longitude.substring(pos+2).split(')',1).toString()
+
+                document.getElementById("latitude").value = latitude
+                document.getElementById("longitude").value = longitude
+            });
+            },errorHandler,{timeout:10000});
+        }
+
+        function errorHandler(err) {
+            if(err.code == 1) {
+               alert("Error: Access is denied!");
+            } else if( err.code == 2) {
+               alert("Error: Position is unavailable!");
+            }
+        }
+    script(async defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAZC2drNgge8VSt0MKNKoACprFPGsGcbeg&callback=initMap')
