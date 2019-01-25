@@ -1,0 +1,35 @@
+extends layout
+
+block content
+    h4 Add your points
+    .jumbotron
+        form(method='POST', action='/points/add')
+            .form-row
+                .form-group.col-md-6
+                    label Latitude
+                    input.form-control(name='latitude', type='text' placeholder='latitude')
+                .form-group.col-md-6
+                    label Longitude
+                    input.form-control(name='longitude', type='text' placeholder='longitude')
+            .infoText
+                label Move the pin over the map
+            hr
+            p(style='text-align:center').lead
+                button.btn.btn-primary(type='submit') Add point
+    p(style='text-align:center').lead
+        button.btn.btn-primary(type='submit') Create route
+    // The div element for the map
+    #map
+    // Replace the value of the key parameter with your own API key.
+    script.
+        // Initialize and add the map
+        function initMap() {
+        // The location of Uluru
+        var uluru = {lat: -25.344, lng: 131.036};
+        // The map, centered at Uluru
+        var map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 4, center: uluru});
+        // The marker, positioned at Uluru
+        var marker = new google.maps.Marker({position: uluru, map: map});
+        }
+    script(async='' defer='' src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAZC2drNgge8VSt0MKNKoACprFPGsGcbeg&callback=initMap')

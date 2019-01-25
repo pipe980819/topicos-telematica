@@ -9,3 +9,27 @@
     background-color: #dff0d8;
     border-color: #d6e9c6;
 }
+
+.jumbotron{
+    width: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.infoText{
+    text-align: center;
+    font-size: 80%;
+}
+
+hr { 
+    display: block;
+    border-style: inset;
+    border-top-color: #eeeeee;
+}
+
+/* Set the size of the div element that contains the map */
+#map {
+    height: 400px;  /* The height is 400 pixels */
+    width: 100%;  /* The width is the width of the web page */
+}

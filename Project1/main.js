@@ -79,11 +79,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //Global variable for users
-app.get('*', function(req, res, next){
-  res.locals.user = req.user || null;
-  next();
-});
-
+app.use((req, res, next) => {
+    res.locals.user = req.user || null;
+    next();
+})
+  
 //Home route
 app.get('/', function(req, res){
     Article.find({}, function(err, article){
@@ -98,33 +98,11 @@ app.get('/', function(req, res){
     });
 });
 
-//Add route
-app.get('/articles/add', function(req, res){
-    res.render('add_article', {
-        title:'Add Article'
-    });
-});
-
-//Add submit POST Route
-app.post('/articles/add', function(req, res){
-    let article = new Article();
-    article.title = req.body.title;
-    article.author = req.body.author;
-    
-    article.save(function(err){
-        if(err){
-            console.log(err);
-            return;
-        }else{
-            req.flash('success', 'Article Added')
-            res.redirect('/');
-        }
-    });
-});
 //Route files
-//let articles = require('./routes/articles');
 let users = require('./routes/users')
+let points = require('./routes/points')
 app.use('/users', users);
+app.use('/points', points)
 
 //Start server
 app.listen(3000);

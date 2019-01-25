@@ -19,12 +19,13 @@ html
                     ul.nav.navbar-nav
                         li
                             a(href='/') Home
-                        li
-                            a(href='/articles/add') Add
+                        if user
+                            li
+                                a(href='/points/add') Add points
                     ul.nav.navbar-nav.navbar-right
                         if user
-                            li 
-                                a(href='#') #{user.name}
+                            li
+                                p.navbar-text #{user.name}
                             li 
                                 a(href='/users/logout') Logout
                         else
@@ -41,7 +42,8 @@ html
             br
             hr
             footer
-                p Copyright
+                p(style='text-align:center') Universidad EAFIT
+                p(style='text-align:center') Ingeniería de Sistemas
         script(src="/bower_components/jquery/dist/jquery.js")
         script(src="/bower_components/bootstrap/dist/js/bootstrap.js")
         script(src="/js/main.js")
