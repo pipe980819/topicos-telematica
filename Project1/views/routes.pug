@@ -17,8 +17,9 @@ block content
                             tr
                                 td= point.latitude
                                 td= point.longitude
-                p(style='text-align:center')
-                    a.btn.btn-primary(href='#') View on map
+                .btn-toolbar
+                    button.btn.btn-danger(type='button' style='') Delete
+                    button.btn.btn-primary(type='button') Show
     else
         br
         h4(style='text-align:center') You haven't added routes yet.
