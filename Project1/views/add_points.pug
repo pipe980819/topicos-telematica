@@ -1,7 +1,23 @@
 extends layout
 
 block content
+    // Modal
+    #nameRoute.modal.fade(role='dialog')
+        .modal-dialog.modal-sm
+            // Modal content
+            .modal-content
+                .modal-header
+                    button.close(type='button' data-dismiss='modal') &times;
+                    h4.modal-title Type the name of the route
+                .modal-body
+                    input.form-control(name='name_route' type='text' placeholder='Type the name')
+                .modal-footer
+                    button.btn.btn-default(type='button' data-dismiss='modal') Close
+                    button.btn.btn-primary(type='button') Save
     h4 Add your points
+    p(style='text-align:center') First create your route and then add points to that route.
+    p(style='text-align:center').lead
+        button.btn.btn-primary(type='button' data-toggle='modal' data-target='#nameRoute') Create route
     .jumbotron
         form(method='POST', action='/points/add')
             .form-row
@@ -16,8 +32,6 @@ block content
             hr
             p(style='text-align:center').lead
                 button.btn.btn-primary(type='submit') Add point
-    p(style='text-align:center').lead
-        button.btn.btn-primary(onclick='getLocation()') Create route
     // The div element for the map
     #map
     // Replace the value of the key parameter with your own API key.
