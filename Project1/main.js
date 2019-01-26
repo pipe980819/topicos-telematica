@@ -24,9 +24,6 @@ db.on('error', function(err){
 //Init app
 const app = express();
 
-//Bring in Models
-let Article = require('./model/article');
-
 //Load view Engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -83,19 +80,10 @@ app.use((req, res, next) => {
     res.locals.user = req.user || null;
     next();
 })
-  
+
 //Home route
 app.get('/', function(req, res){
-    Article.find({}, function(err, article){
-        if(err){
-            console.log(err);
-        }else{
-            res.render('index',{
-                title: 'Articles',
-                articles: article
-            });
-        }
-    });
+    res.render('index');
 });
 
 //Route files

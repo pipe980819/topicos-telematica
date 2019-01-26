@@ -17,9 +17,9 @@ html
                     a.navbar-brand(href='/') GPS Tracking
                 #navbar.collapse.navbar-collapse
                     ul.nav.navbar-nav
-                        li
-                            a(href='/') Home
                         if user
+                            li
+                                a(href='/points/routes') Routes
                             li
                                 a(href='/points/add') Add points
                     ul.nav.navbar-nav.navbar-right
@@ -40,10 +40,6 @@ html
                     div(class="alert alert-danger") #{error.msg}
             block content
             br
-            hr
-            footer
-                p(style='text-align:center') Universidad EAFIT
-                p(style='text-align:center') Ingeniería de Sistemas
         script(src="/bower_components/jquery/dist/jquery.js")
         script(src="/bower_components/bootstrap/dist/js/bootstrap.js")
         script(src="/js/main.js")

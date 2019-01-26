@@ -1,0 +1,24 @@
+extends layout
+
+block content
+    h1 #{title}
+    if points.length >= 1
+        .card
+            .card-header
+                | Route name
+            .card-body
+                table.table
+                    thead
+                        tr
+                            th Latitude
+                            th Longitude
+                    tbody
+                        each point, i in points
+                            tr
+                                td= point.latitude
+                                td= point.longitude
+                p(style='text-align:center')
+                    a.btn.btn-primary(href='#') View on map
+    else
+        br
+        h4(style='text-align:center') You haven't added routes yet.
