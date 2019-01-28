@@ -5,15 +5,16 @@ block content
     #nameRoute.modal.fade(role='dialog')
         .modal-dialog.modal-sm
             // Modal content
-            .modal-content
-                .modal-header
-                    button.close(type='button' data-dismiss='modal') &times;
-                    h4.modal-title Type the name of the route
-                .modal-body
-                    input.form-control(name='name_route' type='text' placeholder='Type the name')
-                .modal-footer
-                    button.btn.btn-default(type='button' data-dismiss='modal') Close
-                    button.btn.btn-primary(type='button') Save
+            form(method='POST', action='/points/create_route')
+                .modal-content
+                    .modal-header
+                        button.close(type='button' data-dismiss='modal') &times;
+                        h4.modal-title Type the name of the route
+                    .modal-body
+                        input.form-control(name='route_name' type='text' placeholder='Type the name')
+                    .modal-footer
+                        button.btn.btn-default(type='button' data-dismiss='modal') Close
+                        button.btn.btn-primary(type='submit') Save
     h4 Add your points
     p(style='text-align:center') First create your route and then add points to that route.
     p(style='text-align:center').lead

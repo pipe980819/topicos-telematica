@@ -3,23 +3,26 @@ extends layout
 block content
     h1 #{title}
     if points.length >= 1
-        .card
-            .card-header
-                | Route name
-            .card-body
-                table.table
-                    thead
-                        tr
-                            th Latitude
-                            th Longitude
-                    tbody
-                        each point, i in points
+        each route, i in routes
+            br
+            .card
+                .card-header
+                    | #{route.name}
+                .card-body
+                    table.table
+                        thead
                             tr
-                                td= point.latitude
-                                td= point.longitude
-                .btn-toolbar
-                    button.btn.btn-danger(type='button' style='') Delete
-                    button.btn.btn-primary(type='button') Show
+                                th Latitude
+                                th Longitude
+                        tbody
+                            each point, i in points
+                                if point.route == route.id
+                                    tr
+                                        td= point.latitude
+                                        td= point.longitude
+                    .btn-toolbar
+                        button.btn.btn-danger(type='button' style='') Delete
+                        button.btn.btn-primary(type='button') Show
     else
         br
         h4(style='text-align:center') You haven't added routes yet.
