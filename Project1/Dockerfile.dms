@@ -7,7 +7,7 @@ LABEL maintainer="Felipe Macias - fmacias1@eafit.edu.co"
 ARG PORT=3000
 ENV PORT $PORT
 
-WORKDIR /project1
+WORKDIR /Project1
 
 COPY package*.json ./
 
