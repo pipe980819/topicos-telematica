@@ -9,7 +9,11 @@ let Routes = require('../model/routes');
 
 //Variables
 let lastRouteId = "";
-let routesArray = [];
+let routesArray; 
+Routes.find({}, function(err, routes){
+    if (err) throw err;
+    routesArray = routes;
+});
 
 //Routes
 router.get('/routes', isAuthenticated, function(req, res){
