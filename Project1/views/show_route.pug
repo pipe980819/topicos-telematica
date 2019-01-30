@@ -3,8 +3,20 @@ extends layout
 block content
     h2 Your route to #{title}
     br
+    .row
+        .col-lg-2
+            p 
+                b Choose your model of travel:
+        .col-lg-2
+            select#mode.form-control(onchange='initMap();')
+                option(value='DRIVING') Driving
+                option(value='WALKING') Walking
+                option(value='BICYCLING') Bicycling
+    br
     // The div element for the map
     #map
+    br
+    #directions-panel.jumbotron
 
     script.
         var points = !{JSON.stringify(points)};
@@ -23,6 +35,7 @@ block content
 
         function calculateAndDisplayRoute(directionsService, directionsDisplay){
             var waypts = [];
+            var selectedMode = document.getElementById('mode').value;
             for (var i = 1; i < points.length-1; i++) {
                 waypts.push({
                 location: new google.maps.LatLng(points[i].latitude, points[i].longitude),
@@ -35,10 +48,21 @@ block content
                 destination: new google.maps.LatLng(points[points.length-1].latitude, points[points.length-1].longitude),
                 waypoints: waypts,
                 optimizeWaypoints: true,
-                travelMode: 'DRIVING'
+                travelMode: google.maps.TravelMode[selectedMode]
             }, function(response, status) {
                 if (status === 'OK') {
-                directionsDisplay.setDirections(response);
+                    directionsDisplay.setDirections(response);
+                    var route = response.routes[0];
+                    var summaryPanel = document.getElementById('directions-panel');
+                    summaryPanel.innerHTML = '';
+                    // For each route, display summary information.
+                    for (var i = 0; i < route.legs.length; i++) {
+                        var routeSegment = i + 1;
+                        summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment + '</b><br>';
+                        summaryPanel.innerHTML += '<b>Origin: </b>' + route.legs[i].start_address + '<br>';
+                        summaryPanel.innerHTML += '<b>Destination: </b>' + route.legs[i].end_address + '<br>';
+                        summaryPanel.innerHTML += '<b>Distance: </b>' + route.legs[i].distance.text + '<br><br>';
+                    }
                 } else {
                     window.alert('Directions request failed due to ' + status);
                 }
