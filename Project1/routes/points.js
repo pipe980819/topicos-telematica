@@ -84,4 +84,21 @@ router.post('/create_route', isAuthenticated, function(req, res){
         });
     }
 });
+
+//Show route
+router.get('/show_route/:id', isAuthenticated, function(req, res){
+    Points.find({username: req.user.id, route: req.query.route}, function(err1, point){
+        Routes.find({_id: req.query.route}, function(err2, route){
+            if(err1 || err2){
+                console.log(err1, err2);
+            }else{
+                res.render('show_route', {
+                    title: route[0].name,
+                    points: point,
+                });
+            }
+        });
+    });
+});
+
 module.exports = router;

@@ -1,0 +1,23 @@
+extends layout
+
+block content
+    h2 Your route to #{title}
+    br
+    // The div element for the map
+    #map
+    table.table
+        tbody
+            each point, i in points
+                tr
+                    td= point.latitude
+                    td= point.longitude
+
+    script.
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: 6.2411059, lng: -75.5547881},
+                    zoom: 15
+            });
+        }
+
+    script(async defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAZC2drNgge8VSt0MKNKoACprFPGsGcbeg&callback=initMap')

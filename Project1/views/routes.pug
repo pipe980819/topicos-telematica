@@ -22,7 +22,9 @@ block content
                                         td= point.longitude
                     .btn-toolbar
                         button.btn.btn-danger(type='button' style='') Delete
-                        button.btn.btn-primary(type='button') Show
+                        form(method='GET', action='/points/show_route/{{route.id}}')
+                            input(type='hidden' name='route' value=route.id)
+                            button.btn.btn-primary(type='submit') Show
     else
         br
         h4(style='text-align:center') You haven't added routes yet.
