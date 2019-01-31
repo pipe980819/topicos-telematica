@@ -7,7 +7,7 @@ block content
             br
             .card
                 .card-header
-                    | #{route.name}
+                    b #{route.name}
                 .card-body
                     table.table
                         thead
@@ -21,10 +21,13 @@ block content
                                         td= point.latitude
                                         td= point.longitude
                     .btn-toolbar
-                        button.btn.btn-danger(type='button' style='') Delete
+                        form(method='GET', action='/points/delete/{{route.id}}')
+                            input(type='hidden' name='route' value=route.id)
+                            button.btn.btn-danger(type='submit') Delete
                         form(method='GET', action='/points/show_route/{{route.id}}')
                             input(type='hidden' name='route' value=route.id)
                             button.btn.btn-primary(type='submit') Show
+                        button.btn.btn-info(type='submit') Share
     else
         br
         h4(style='text-align:center') You haven't added routes yet.

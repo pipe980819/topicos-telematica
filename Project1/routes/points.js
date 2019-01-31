@@ -9,14 +9,17 @@ let Routes = require('../model/routes');
 
 //Variables
 let lastRouteId = "";
-let routesArray; 
-Routes.find({}, function(err, routes){
-    if (err) throw err;
-    routesArray = routes;
-});
+let routesArray = [];
+function updateRoutes(){
+    Routes.find({}, function(err, routes){
+        if (err) throw err;
+        routesArray = routes;
+    });
+}
 
 //Routes
 router.get('/routes', isAuthenticated, function(req, res){
+    updateRoutes();
     Points.find({username: req.user.id}, function(err, point){
         if(err){
             console.log(err);
@@ -77,7 +80,7 @@ router.post('/create_route', isAuthenticated, function(req, res){
                 return;
             }else{
                 lastRouteId = route.id;
-                routesArray.push(route);
+                //routesArray.push(route);
                 req.flash('success', 'Route Added');
                 res.redirect('/points/add');
             }
@@ -101,4 +104,19 @@ router.get('/show_route/:id', isAuthenticated, function(req, res){
     });
 });
 
+//Delete route
+router.get('/delete/:id', isAuthenticated, function(req, res){
+    Points.deleteMany({username: req.user.id, route: req.query.route}, function(err1){
+        Routes.findByIdAndDelete(req.query.route, function(err2){
+            if(err1 || err2){
+                console.log(err1, err2);
+            }else{
+                req.flash('success', 'Route deleted');
+                res.redirect('/points/routes');
+                updateRoutes();
+            }
+        });
+    });
+
+});
 module.exports = router;
