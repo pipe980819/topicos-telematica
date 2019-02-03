@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    h1 Routes shared with you
+    if !error
+        each route, i in title
+            br
+            .card
+                .card-header
+                    b #{route[0].name} from #{owner[i][0].name}
+                .card-body
+                    table.table
+                        thead
+                            tr
+                                th Latitude
+                                th Longitude
+                        tbody
+                            each point in points
+                                - for (var i = 0; i < point.length; ++i)
+                                    if point[i].route == route[0].id
+                                        tr
+                                            td= point[i].latitude
+                                            td= point[i].longitude
+                    .btn-toolbar
+                        form(method='GET', action='/points/show_shared_route/{{route[0].id}}')
+                            input(type='hidden' name='route' value=route[0].id)
+                            button.btn.btn-primary(type='submit') Show
+    else
+        br
+        h4(style='text-align:center') Nobody has shared routes with you yet.

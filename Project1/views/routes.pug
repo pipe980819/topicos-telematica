@@ -27,7 +27,22 @@ block content
                         form(method='GET', action='/points/show_route/{{route.id}}')
                             input(type='hidden' name='route' value=route.id)
                             button.btn.btn-primary(type='submit') Show
-                        button.btn.btn-info(type='submit') Share
+                        button.btn.btn-info(type='button' data-toggle='modal' data-target='#shareRoute'+route.id) Share
+            // Modal
+            .modal.fade(id="shareRoute"+route.id role='dialog')
+                .modal-dialog.modal-sm
+                    // Modal content
+                    form(method='GET', action='/points/share_route/{{route.id}}')
+                        .modal-content
+                            .modal-header
+                                button.close(type='button' data-dismiss='modal') &times;
+                                h4.modal-title Type the username with whom you want to share this
+                            .modal-body
+                                input.form-control(name='username' type='text' placeholder='Type the username')
+                            .modal-footer
+                                button.btn.btn-default(type='button' data-dismiss='modal') Close
+                                input(type='hidden' name='route' value=route.id)
+                                button.btn.btn-primary(type='submit') Save
     else
         br
         h4(style='text-align:center') You haven't added routes yet.
