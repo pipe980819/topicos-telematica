@@ -119,4 +119,4 @@ Email: fmacias1@eafit.edu.co
 
     IaaS Cloud of AWS
         
-        http://ec2-3-83-34-52.compute-1.amazonaws.com/
+        https://ec2-3-93-231-16.compute-1.amazonaws.com/
